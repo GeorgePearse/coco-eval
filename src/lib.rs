@@ -72,6 +72,7 @@ pub mod types;
 pub mod loader;
 pub mod threshold;
 pub mod metrics;
+pub mod matching;
 pub mod evaluator;
 
 // Re-export commonly used types and functions

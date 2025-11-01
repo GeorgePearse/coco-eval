@@ -74,7 +74,7 @@ pub fn calculate_f1_from_pr(pr: &PrecisionRecall) -> f64 {
 /// use coco_eval::metrics::f1_score::calculate_f1_from_counts;
 ///
 /// let f1 = calculate_f1_from_counts(8, 2, 3);
-/// assert!((f1 - 0.7273).abs() < 0.001);
+/// assert!((f1 - 0.7619).abs() < 0.001);
 /// ```
 pub fn calculate_f1_from_counts(
     true_positives: usize,

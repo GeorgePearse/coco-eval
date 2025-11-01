@@ -115,26 +115,52 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!();
 
     // Example 5: Evaluation
-    println!("5. Running Evaluation");
+    println!("5. Running Full Evaluation");
     let metrics = evaluate(&ground_truth, &predictions, None, None)?;
     println!("   Evaluation complete!");
-    println!("   mAP: {:.4}", metrics.map);
-    println!("   AP50: {:.4}", metrics.ap50);
-    println!("   AP75: {:.4}", metrics.ap75);
+    println!();
+    println!("   Overall Metrics:");
+    println!("   ├─ mAP (all IoU thresholds): {:.4}", metrics.map);
+    println!("   ├─ AP50 (IoU=0.50): {:.4}", metrics.ap50);
+    println!("   └─ AP75 (IoU=0.75): {:.4}", metrics.ap75);
+    println!();
+    println!("   Per-Class AP:");
+    for (cat_id, ap) in &metrics.ap_per_class {
+        let cat_name = ground_truth.categories.iter()
+            .find(|c| c.id == *cat_id)
+            .map(|c| c.name.as_str())
+            .unwrap_or("unknown");
+        println!("   ├─ {} (id={}): {:.4}", cat_name, cat_id, ap);
+    }
     println!();
 
-    // Example 6: Precision/Recall metrics
-    println!("6. Computing Precision and Recall");
+    // Example 6: Confidence Threshold Analysis
+    println!("6. Precision/Recall/F1 at Confidence Thresholds");
+    println!("   Threshold | Precision | Recall | F1 Score");
+    println!("   ----------|-----------|--------|----------");
+
+    for i in 0..metrics.precision_at_thresholds.len().min(5) {
+        let (threshold, precision) = metrics.precision_at_thresholds[i];
+        let (_, recall) = metrics.recall_at_thresholds[i];
+        let (_, f1) = metrics.f1_at_thresholds[i];
+        println!("   {:>8.2} | {:>9.4} | {:>6.4} | {:>8.4}",
+            threshold, precision, recall, f1);
+    }
+    println!("   ... ({} thresholds total)", metrics.precision_at_thresholds.len());
+    println!();
+
+    // Example 7: Manual Precision/Recall calculation
+    println!("7. Computing Precision and Recall (Manual Example)");
     use coco_eval::metrics::precision_recall::calculate_precision_recall;
     use coco_eval::metrics::f1_score::calculate_f1_from_pr;
 
     let pr = calculate_precision_recall(8, 2, 3);
     println!("   For TP=8, FP=2, FN=3:");
-    println!("   Precision: {:.4}", pr.precision);
-    println!("   Recall: {:.4}", pr.recall);
+    println!("   ├─ Precision: {:.4} ({}/ {})", pr.precision, pr.true_positives, pr.true_positives + pr.false_positives);
+    println!("   ├─ Recall: {:.4} ({}/{})", pr.recall, pr.true_positives, pr.true_positives + pr.false_negatives);
 
     let f1 = calculate_f1_from_pr(&pr);
-    println!("   F1 Score: {:.4}", f1);
+    println!("   └─ F1 Score: {:.4}", f1);
     println!();
 
     println!("=== Example Complete ===");

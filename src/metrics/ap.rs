@@ -53,7 +53,7 @@ pub fn calculate_ap(precisions: &[f64], recalls: &[f64]) -> f64 {
 ///
 /// let class_aps = vec![0.8, 0.9, 0.75, 0.85];
 /// let map = calculate_map(&class_aps);
-/// assert_eq!(map, 0.825);
+/// assert!((map - 0.825).abs() < 1e-10);
 /// ```
 pub fn calculate_map(class_aps: &[f64]) -> f64 {
     if class_aps.is_empty() {
