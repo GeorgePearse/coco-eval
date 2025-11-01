@@ -74,3 +74,11 @@
 **Low Priority** (backlog):
 1. Additional format conversions
 2. Interactive visualizations
+
+## References
+
+### Testing in Rust
+- [Why does Rust's testing tools seem so much less mature than other languages?](https://www.reddit.com/r/rust/comments/wmspjb/why_does_rusts_testing_tools_seem_so_much_less/)
+  - Discussion on the state of testing tooling in Rust
+  - Context for our comprehensive test suite approach (99 tests)
+  - Highlights gaps in property-based testing, snapshot testing, etc.
