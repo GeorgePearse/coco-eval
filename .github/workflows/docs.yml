@@ -22,16 +22,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-      - name: Setup Rust cache
-        uses: Swatinem/rust-cache@v2
+      - name: Install MkDocs Material
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-autorefs
 
       - name: Build documentation
-        run: |
-          cargo doc --no-deps --document-private-items
-          echo '<meta http-equiv="refresh" content="0; url=coco_eval">' > target/doc/index.html
+        run: mkdocs build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -39,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'target/doc'
+          path: 'site'
 
   deploy:
     environment:
