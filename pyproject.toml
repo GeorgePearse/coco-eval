@@ -1,0 +1,49 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "coco-eval"
+version = "0.1.0"
+description = "High-performance COCO evaluation metrics in Rust with Python bindings"
+authors = [{name = "George Pearse"}]
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = [
+    "polars>=0.20.0",
+    "numpy>=1.20.0",
+]
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["coco", "object-detection", "metrics", "evaluation", "computer-vision"]
+
+[project.urls]
+Homepage = "https://github.com/GeorgePearse/coco-eval"
+Documentation = "https://georgepearse.github.io/coco-eval/"
+Repository = "https://github.com/GeorgePearse/coco-eval"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-benchmark>=4.0",
+    "matplotlib>=3.0",
+    "maturin>=1.0",
+]
+
+[tool.maturin]
+features = ["python"]
+python-source = "python"
+module-name = "coco_eval._core"
