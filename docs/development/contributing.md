@@ -144,13 +144,13 @@ git checkout -b feature/my-feature
 
 2. **Make your changes**
 
-3. **Run all checks:**
+3. **Run all checks locally:**
 
 ```bash
 cargo fmt --check
 cargo clippy -- -D warnings
-cargo test
-cargo bench
+cargo test --all-features
+cargo doc --no-deps --all-features
 ```
 
 4. **Commit with conventional commits:**
@@ -169,13 +169,51 @@ git push origin feature/my-feature
 
 Then create a pull request on GitHub.
 
+## Automated CI Checks
+
+Every pull request automatically triggers comprehensive CI checks via GitHub Actions:
+
+### Required Checks
+
+All of these must pass before a PR can be merged:
+
+- **Check** - Validates project builds with `cargo check --all-features`
+- **Test Suite** - Runs all 99 tests on:
+  - 3 operating systems: Ubuntu, macOS, Windows
+  - 2 Rust versions: stable, beta
+  - 6 total test combinations
+- **Rustfmt** - Ensures code formatting with `cargo fmt --check`
+- **Clippy** - Runs linter with warnings as errors
+- **Documentation** - Builds docs and runs doc tests
+
+### CI Success Job
+
+The `ci-success` job aggregates all required checks. Configure this as your required status check in branch protection rules for a single, clear merge requirement.
+
+### Setting Up Branch Protection (Maintainers)
+
+To enforce CI checks on PRs:
+
+1. Go to **Settings** → **Branches** → **Branch protection rules**
+2. Add rule for `main` branch
+3. Enable:
+   - ✅ Require status checks to pass before merging
+   - ✅ Require branches to be up to date before merging
+4. Select required status check: **All CI checks passed**
+5. Enable:
+   - ✅ Require pull request before merging
+   - ✅ Dismiss stale pull request approvals when new commits are pushed
+
+This ensures all 99 tests pass on all platforms before any code is merged.
+
 ## PR Guidelines
 
 - Keep PRs focused and small
-- Include tests for new functionality
+- Include tests for new functionality (maintain 99+ test coverage)
 - Update documentation as needed
-- Ensure all CI checks pass
+- Ensure all CI checks pass (check Actions tab)
 - Reference related issues
+- Wait for all CI checks to complete before requesting review
 
 ## Protected Files
 
