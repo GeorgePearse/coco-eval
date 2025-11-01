@@ -74,6 +74,9 @@ pub mod threshold;
 pub mod metrics;
 pub mod matching;
 pub mod evaluator;
+pub mod stats;
+pub mod nms;
+pub mod polars_utils;
 
 // Re-export commonly used types and functions
 pub use error::{CocoEvalError, Result};

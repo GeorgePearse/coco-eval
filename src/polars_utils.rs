@@ -17,10 +17,13 @@ use crate::error::CocoEvalError;
 ///
 /// `Ok(())` if all columns are present, error otherwise
 pub fn validate_columns(df: &DataFrame, required_columns: &[&str]) -> Result<(), CocoEvalError> {
-    let column_names = df.get_column_names();
+    let column_names: Vec<String> = df.get_column_names()
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
 
     for col in required_columns {
-        if !column_names.contains(col) {
+        if !column_names.iter().any(|c| c == col) {
             return Err(CocoEvalError::MissingColumn(col.to_string()));
         }
     }
@@ -147,16 +150,21 @@ pub fn nan_to_zeros(series: &Series) -> Result<Series, CocoEvalError> {
 /// # Arguments
 ///
 /// * `df` - The DataFrame to filter
-/// * `column` - Name of the column to filter on
-/// * `valid_values` - Set of valid values to keep
+/// * `_column` - Name of the column to filter on
+/// * `_valid_values` - Set of valid values to keep
 ///
 /// # Returns
 ///
 /// A new DataFrame with only rows where `column` value is in `valid_values`
+///
+/// # Note
+///
+/// This is currently a stub implementation that returns the original DataFrame.
+/// Full implementation will be added when needed by the evaluator.
 pub fn filter_by_set<T>(
     df: &DataFrame,
-    column: &str,
-    valid_values: &std::collections::HashSet<T>,
+    _column: &str,
+    _valid_values: &std::collections::HashSet<T>,
 ) -> Result<DataFrame, CocoEvalError>
 where
     T: std::cmp::Eq + std::hash::Hash + Clone + std::fmt::Display,
@@ -197,7 +205,7 @@ mod tests {
 
     #[test]
     fn test_nan_to_zeros() {
-        let series = Series::new("test", &[Some(1.0), None, Some(3.0)]);
+        let series = Series::new("test".into(), &[Some(1.0), None, Some(3.0)]);
         let result = nan_to_zeros(&series).unwrap();
 
         let values: Vec<f64> = result.f64().unwrap().into_iter()
@@ -210,10 +218,10 @@ mod tests {
     #[test]
     fn test_extract_bbox_from_series() {
         // Create a Series with a list of bboxes
-        let bbox1 = Series::new("", &[10.0, 20.0, 30.0, 40.0]);
-        let bbox2 = Series::new("", &[50.0, 60.0, 70.0, 80.0]);
+        let bbox1 = Series::new("".into(), &[10.0, 20.0, 30.0, 40.0]);
+        let bbox2 = Series::new("".into(), &[50.0, 60.0, 70.0, 80.0]);
 
-        let list_series = Series::new("bbox", &[bbox1, bbox2]);
+        let list_series = Series::new("bbox".into(), &[bbox1, bbox2]);
 
         let extracted = extract_bbox_from_series(&list_series, 0).unwrap();
         assert_eq!(extracted, vec![10.0, 20.0, 30.0, 40.0]);

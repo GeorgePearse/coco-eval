@@ -20,8 +20,8 @@ thiserror = "2.0"
 log = "0.4"
 
 # Python bindings
-pyo3 = { version = "0.22", features = ["extension-module", "abi3-py39"], optional = true }
-numpy = { version = "0.22", optional = true }
+pyo3 = { version = "0.21", features = ["extension-module", "abi3-py39"], optional = true }
+numpy = { version = "0.21", optional = true }
 
 # DataFrame support
 polars = { version = "0.44", features = ["lazy", "dtype-full"] }
