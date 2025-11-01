@@ -1,0 +1,36 @@
+[package]
+name = "coco-eval"
+version = "0.1.0"
+edition = "2021"
+authors = ["George Pearse"]
+description = "Rust library for COCO object detection evaluation metrics with confidence thresholding"
+repository = "https://github.com/GeorgePearse/coco-eval"
+homepage = "https://github.com/GeorgePearse/coco-eval"
+documentation = "https://docs.rs/coco-eval"
+license = "MIT"
+readme = "README.md"
+keywords = ["coco", "object-detection", "metrics", "evaluation", "computer-vision"]
+categories = ["algorithms", "science"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+ndarray = "0.16"
+thiserror = "2.0"
+log = "0.4"
+
+[dev-dependencies]
+criterion = "0.5"
+tempfile = "3.0"
+
+[lib]
+name = "coco_eval"
+path = "src/lib.rs"
+
+[[example]]
+name = "basic_evaluation"
+path = "examples/basic_evaluation.rs"
+
+[[example]]
+name = "threshold_optimization"
+path = "examples/threshold_optimization.rs"
