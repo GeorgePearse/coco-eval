@@ -129,7 +129,7 @@ pub fn interpolate_precision(precision: &[f64], recall: &[f64]) -> Vec<f64> {
             .zip(recall.iter())
             .filter(|(_, &r)| r >= recall_level)
             .map(|(&p, _)| p)
-            .fold(0.0f64, |a, b| a.max(b));
+            .fold(0.0f64, f64::max);
 
         interpolated[i] = max_precision;
     }

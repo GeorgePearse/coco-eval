@@ -23,10 +23,6 @@ log = "0.4"
 pyo3 = { version = "0.21", features = ["extension-module", "abi3-py39"], optional = true }
 numpy = { version = "0.21", optional = true }
 
-# DataFrame support
-polars = { version = "0.44", features = ["lazy", "dtype-full"] }
-polars-core = "0.44"
-
 # Performance
 rayon = "1.10"
 ahash = "0.8"

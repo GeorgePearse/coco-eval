@@ -1,7 +1,7 @@
-/// Non-Maximum Suppression (`NMS`) implementation
-///
-/// This module provides `NMS` functionality for filtering overlapping bounding boxes,
-/// matching the behavior of the Python supervision library.
+//! Non-Maximum Suppression (`NMS`) implementation
+//!
+//! This module provides `NMS` functionality for filtering overlapping bounding boxes,
+//! matching the behavior of the Python supervision library.
 
 use crate::error::CocoEvalError;
 

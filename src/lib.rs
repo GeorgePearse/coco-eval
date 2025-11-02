@@ -5,8 +5,8 @@
 //!
 //! This library provides implementations of standard object detection metrics including:
 //! - **mAP** (mean Average Precision)
-//! - **AP50** (Average Precision at IoU=0.50)
-//! - **AP75** (Average Precision at IoU=0.75)
+//! - **AP50** (Average Precision at `IoU=0.50`)
+//! - **AP75** (Average Precision at `IoU=0.75`)
 //! - **Precision** at various confidence thresholds
 //! - **Recall** at various confidence thresholds
 //! - **F1 Score** at various confidence thresholds
@@ -14,11 +14,24 @@
 //! ## Features
 //!
 //! - Load and parse COCO format JSON annotations
-//! - Calculate IoU (Intersection over Union) between bounding boxes
+//! - Calculate `IoU` (Intersection over Union) between bounding boxes
 //! - Compute precision, recall, and F1 scores
 //! - Calculate Average Precision (AP) and mean Average Precision (mAP)
 //! - Filter predictions by confidence score thresholds
-//! - Evaluate at multiple confidence and IoU thresholds
+//! - Evaluate at multiple confidence and `IoU` thresholds
+
+#![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::cast_precision_loss)]
+#![allow(clippy::cast_sign_loss)]
+#![allow(clippy::cast_lossless)]
+#![allow(clippy::missing_errors_doc)]
+#![allow(clippy::missing_panics_doc)]
+#![allow(clippy::module_name_repetitions)]
+#![allow(clippy::type_complexity)]
+#![allow(clippy::too_many_lines)]
+#![allow(clippy::must_use_candidate)]
+#![allow(clippy::doc_markdown)]
+#![allow(clippy::uninlined_format_args)]
 //!
 //! ## Quick Start
 //!
@@ -76,7 +89,6 @@ pub mod matching;
 pub mod evaluator;
 pub mod stats;
 pub mod nms;
-pub mod polars_utils;
 
 // Re-export commonly used types and functions
 pub use error::{CocoEvalError, Result};

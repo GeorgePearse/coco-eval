@@ -37,12 +37,12 @@ pub fn match_detections(
     // Convert annotations to bounding boxes
     let pred_boxes: Vec<BoundingBox> = predictions
         .iter()
-        .map(|ann| ann.to_bbox())
+        .map(super::types::Annotation::to_bbox)
         .collect::<Result<Vec<_>>>()?;
 
     let gt_boxes: Vec<BoundingBox> = ground_truths
         .iter()
-        .map(|ann| ann.to_bbox())
+        .map(super::types::Annotation::to_bbox)
         .collect::<Result<Vec<_>>>()?;
 
     // Create prediction indices sorted by confidence (descending)
@@ -128,7 +128,7 @@ pub fn group_annotations(
 
     for annotation in annotations {
         let key = (annotation.image_id, annotation.category_id);
-        groups.entry(key).or_insert_with(Vec::new).push(annotation.clone());
+        groups.entry(key).or_default().push(annotation.clone());
     }
 
     groups

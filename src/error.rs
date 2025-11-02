@@ -39,23 +39,6 @@ pub enum CocoEvalError {
     /// Invalid confidence threshold.
     #[error("Invalid threshold: {0}")]
     InvalidThreshold(String),
-
-    /// Error from Polars DataFrame operations.
-    #[error("Polars error: {0}")]
-    PolarsError(#[from] polars::error::PolarsError),
-
-    /// Invalid DataFrame schema or structure.
-    #[error("Invalid DataFrame: {0}")]
-    InvalidDataFrame(String),
-
-    /// Missing required column in DataFrame.
-    #[error("Missing column: {0}")]
-    MissingColumn(String),
-
-    /// Error during Python conversion.
-    #[cfg(feature = "python")]
-    #[error("Python conversion error: {0}")]
-    PythonConversionError(String),
 }
 
 // Conversion to Python exceptions when using PyO3

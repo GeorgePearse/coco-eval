@@ -1,7 +1,7 @@
-/// Statistics tracking for inference/prediction processing
-///
-/// This module provides structures and utilities for tracking statistics during
-/// the validation and processing of predictions.
+//! Statistics tracking for inference/prediction processing
+//!
+//! This module provides structures and utilities for tracking statistics during
+//! the validation and processing of predictions.
 
 use serde::{Deserialize, Serialize};
 

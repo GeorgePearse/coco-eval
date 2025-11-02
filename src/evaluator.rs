@@ -57,7 +57,7 @@ pub fn evaluate(
     }
 
     let mut category_ids: Vec<u64> = category_ids.into_iter().collect();
-    category_ids.sort();
+    category_ids.sort_unstable();
 
     // Group annotations by (image_id, category_id)
     let gt_groups = group_annotations(&ground_truth.annotations);
@@ -134,13 +134,13 @@ pub fn evaluate(
             &confidence_thresholds,
         )?;
 
-    metrics.precision_at_thresholds = precision_at_thresh.clone();
-    metrics.recall_at_thresholds = recall_at_thresh.clone();
+    metrics.precision_at_thresholds.clone_from(&precision_at_thresh);
+    metrics.recall_at_thresholds.clone_from(&recall_at_thresh);
 
     // Calculate F1 scores
-    for i in 0..confidence_thresholds.len() {
-        let precision = precision_at_thresh.get(i).map(|(_, p)| *p).unwrap_or(0.0);
-        let recall = recall_at_thresh.get(i).map(|(_, r)| *r).unwrap_or(0.0);
+    for (i, _) in confidence_thresholds.iter().enumerate() {
+        let precision = precision_at_thresh.get(i).map_or(0.0, |(_, p)| *p);
+        let recall = recall_at_thresh.get(i).map_or(0.0, |(_, r)| *r);
         let f1 = calculate_f1_score(precision, recall);
         metrics
             .f1_at_thresholds

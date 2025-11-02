@@ -19,26 +19,31 @@ pub struct BoundingBox {
 
 impl BoundingBox {
     /// Create a new bounding box.
+    #[must_use]
     pub fn new(x: f64, y: f64, width: f64, height: f64) -> Self {
         Self { x, y, width, height }
     }
 
     /// Get the area of the bounding box.
+    #[must_use]
     pub fn area(&self) -> f64 {
         self.width * self.height
     }
 
     /// Get the right coordinate (x + width).
+    #[must_use]
     pub fn right(&self) -> f64 {
         self.x + self.width
     }
 
     /// Get the bottom coordinate (y + height).
+    #[must_use]
     pub fn bottom(&self) -> f64 {
         self.y + self.height
     }
 
     /// Check if the bounding box is valid (positive dimensions).
+    #[must_use]
     pub fn is_valid(&self) -> bool {
         self.width > 0.0 && self.height > 0.0
     }
