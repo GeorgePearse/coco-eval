@@ -48,3 +48,7 @@ path = "examples/basic_evaluation.rs"
 [[example]]
 name = "threshold_optimization"
 path = "examples/threshold_optimization.rs"
+
+[[bench]]
+name = "metrics_benchmark"
+harness = false
